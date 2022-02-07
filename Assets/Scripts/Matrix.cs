@@ -1,0 +1,324 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Matrix
+{
+    public int numberofrows;
+    public int numberofcolumns;
+    public List<List<float>> MatrixData;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    void InitalizeList()
+    {
+        MatrixData = new List<List<float>>();
+    }
+    public Matrix()
+    {
+        InitalizeList();
+    }
+    public Matrix(int rows, int columns)
+    {
+        numberofrows = rows;
+        numberofcolumns = columns;
+        InitalizeList();
+        for (int i = 0; i < rows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = 0; j < columns; j++)
+            {
+                MatrixData[i].Add(0);
+            }
+        }
+    }
+    public void SetMatrix(float[,] arr2D)
+    {
+        InitalizeList();
+        numberofrows = arr2D.GetLength(0);
+        numberofcolumns = arr2D.GetLength(1);
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = 0; j < numberofcolumns; j++)
+            {
+                MatrixData[i].Add(arr2D[numberofrows, numberofcolumns]);
+            }
+        }
+    }
+    public Matrix(float[,] arr2D)
+    {
+        SetMatrix(arr2D);
+    }
+    public void PrintMatrix()
+    {
+        InitalizeList();
+        string display = "";
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = 0; j < numberofcolumns; j++)
+            {
+                display += MatrixData[numberofrows][numberofcolumns] + " ";
+            }
+            display += '\n';
+        }
+        Debug.Log(display);
+    }
+    public void SetElement(int r, int c, float value)
+    {
+        if (r < numberofrows && c < numberofcolumns)
+        {
+            MatrixData[r][c] = value;
+        }
+        else
+        {
+            Debug.Log("Row or Col out of bound");
+        }
+    }
+    public float GetElement(int r, int c)
+    {
+        if (r < numberofrows && c < numberofcolumns)
+        {
+            return MatrixData[r][c];
+        }
+        else
+        {
+            Debug.Log("Row or Col out of bound");
+            return 0;
+        }
+    }
+    public void SetRow(int rowNum, float[] arr)
+    {
+        if (arr.Length == numberofrows && rowNum < numberofrows)
+        {
+            for (int i = 0; i < numberofrows; i++)
+            {
+                MatrixData[rowNum][i] = arr[i];
+            }
+        }
+        else
+        {
+            Debug.Log("Row cannot be set");
+        }
+    }
+    public void SetCol(int ColNum, float[] arr)
+    {
+        if (arr.Length == numberofcolumns && ColNum < numberofcolumns)
+        {
+            for (int i = 0; i < numberofcolumns; i++)
+            {
+                MatrixData[i][ColNum] = arr[i];
+            }
+        }
+        else
+        {
+            Debug.Log("Col cannot be set");
+        }
+    }
+    public void SwapRows(int r1, int r2)
+    {
+        if (r1 < numberofrows && r2 < numberofrows)
+        {
+            for (int i = 0; i < numberofrows; i++)
+            {
+                float temp = MatrixData[r1][i];
+                MatrixData[r1][i] = MatrixData[r2][i];
+                MatrixData[r2][i] = temp;
+            }
+        }
+        else
+        {
+            Debug.Log("Swap not possible");
+        }
+
+    }
+    public void SwapCol(int c1, int c2)
+    {
+        if (c1 < numberofcolumns && c2 < numberofcolumns)
+        {
+            for (int i = 0; i < numberofrows; i++)
+            {
+                float temp = MatrixData[i][c1];
+                MatrixData[i][c1] = MatrixData[i][c2];
+                MatrixData[i][c2] = temp;
+            }
+        }
+        else
+        {
+            Debug.Log("Swap not possible");
+        }
+    }
+    public Matrix Add(Matrix toAdd)
+    {
+        if (numberofrows == toAdd.numberofrows && numberofcolumns == toAdd.numberofcolumns)
+        {
+            Matrix AddedMatrix = new Matrix(numberofrows, numberofcolumns);
+            for (int i = 0; i < numberofrows; i++)
+            {
+                for (int j = 0; j < numberofcolumns; j++)
+                {
+                    AddedMatrix.SetElement(i, j, GetElement(i, j) + toAdd.GetElement(i, j));
+                }
+            }
+            return AddedMatrix;
+        }
+        else
+        {
+            Debug.Log("Not Possible to Add");
+            return null;
+        }
+    }
+    public Matrix Subtract(Matrix toSubtract)
+    {
+        if (numberofrows == toSubtract.numberofrows && numberofcolumns == toSubtract.numberofcolumns)
+        {
+            Matrix SubtractedMatrix = new Matrix(numberofrows, numberofcolumns);
+            for (int i = 0; i < numberofrows; i++)
+            {
+                for (int j = 0; j < numberofcolumns; j++)
+                {
+                    SubtractedMatrix.SetElement(i, j, GetElement(i, j) - toSubtract.GetElement(i, j));
+                }
+            }
+            return SubtractedMatrix;
+        }
+        else
+        {
+            Debug.Log("Not Possible to Subtract");
+            return null;
+        }
+    }
+    public void SetMatrix(int num)
+    {
+        InitalizeList();
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = 0; j < numberofcolumns; j++)
+            {
+                MatrixData[i].Add(num);
+            }
+        }
+    }
+    public void SetRow(int rowNum,int num)
+    {
+        if (rowNum < numberofrows)
+        {
+            for (int i = 0; i < numberofrows; i++)
+            {
+                MatrixData[rowNum][i] = num;
+            }
+        }
+        else
+        {
+            Debug.Log("Row cannot be set");
+        }
+    }
+    public void SetCol(int ColNum, int num)
+    {
+        if (ColNum < numberofcolumns)
+        {
+            for (int i = 0; i < numberofcolumns; i++)
+            {
+                MatrixData[i][ColNum] = num;
+            }
+        }
+        else
+        {
+            Debug.Log("Col cannot be set");
+        }
+    }
+    public void SetDiagonal(int num)
+    {
+        InitalizeList();
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = i; j <=i; j++)
+            {
+                MatrixData[i][j] = num;
+            }
+        }
+    }
+    public void SetInverseDiagonal(int num)
+    {
+        InitalizeList();
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j =numberofcolumns-i-1; j <= numberofcolumns-i-1; j++)
+            {
+                MatrixData[i][j] = num;
+            }
+        }
+    }
+    public bool IsRowSame(int rowNum)
+    {
+        bool isrowsame = true;
+        for (int i= 0; i < numberofrows; i++)
+        {
+            if (MatrixData[rowNum][i] != MatrixData[rowNum][i+1])
+            {
+                isrowsame = false;
+            }          
+        }
+        return isrowsame;
+    }
+    public bool IsColSame(int ColNum)
+    {
+        bool iscolsame = true;
+        for (int i = 0; i < numberofcolumns; i++)
+        {
+            if (MatrixData[i][ColNum] != MatrixData[ColNum][i + 1])
+            {
+                iscolsame = false;
+            }
+        }
+        return iscolsame;
+    }
+    public bool IsDiagonalSame()
+    {
+        bool isdiagonalsame =true;
+        InitalizeList();
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = i; j <= i; j++)
+            {
+                if(MatrixData[i][j] != MatrixData[i + 1][j + 1])
+                {
+                    isdiagonalsame = false;
+                }
+            }
+        }
+        return isdiagonalsame;
+    }
+    public bool IsInverseDiagonalSame()
+    {
+        bool isinversediagonalsame = true;
+        InitalizeList();
+        for (int i = 0; i < numberofrows; i++)
+        {
+            MatrixData.Add(new List<float>());
+            for (int j = numberofcolumns - i - 1; j <= numberofcolumns - i - 1; j++)
+            {
+                if(MatrixData[i][j] != MatrixData[i + 1][j-1])
+                {
+                    isinversediagonalsame = false;
+                }
+                
+            }
+        }
+        return isinversediagonalsame;
+    }
+
+}
