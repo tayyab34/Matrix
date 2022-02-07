@@ -220,7 +220,7 @@ public class Matrix
         if (colNum < numberofcolumns)
         {
             float[] Array = new float[colNum];
-            for (int i = 0; i < numberofrows; i++)
+            for (int i = 0; i < numberofcolumns; i++)
             {
                 Array[i] = MatrixData[i][colNum];
             }
@@ -253,9 +253,7 @@ public class Matrix
     public Matrix Multiply(Matrix toMultiply)
     {
         Matrix MultipliedMatrix = new Matrix(numberofrows, numberofcolumns);
-        if (numberofcolumns == toMultiply.numberofrows)
-        {
-            
+
             for (int i = 0; i < numberofrows; i++)
             {
                 for (int j = 0; j < toMultiply.numberofcolumns; j++)
