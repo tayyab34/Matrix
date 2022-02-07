@@ -197,6 +197,82 @@ public class Matrix
             return null;
         }
     }
+    public float[] GetRow(int rowNum)
+    {
+        if (rowNum < numberofrows)
+        {
+            float[] Array = new float[rowNum];
+            for (int i = 0; i < numberofrows; i++)
+            {
+                Array[i] = MatrixData[rowNum][i];
+            }
+            return Array;
+        }
+        else
+        {
+            Debug.Log("Row cannot be get");
+            return null;
+        }
+        
+    }
+    public float[] GetCol(int colNum)
+    {
+        if (colNum < numberofcolumns)
+        {
+            float[] Array = new float[colNum];
+            for (int i = 0; i < numberofrows; i++)
+            {
+                Array[i] = MatrixData[i][colNum];
+            }
+            return Array;
+        }
+        else
+        {
+            Debug.Log("Col cannot be get");
+            return null;
+        }
+
+    }
+    public float AddArrayMultiples(float[] arr1,float[] arr2)
+    {
+        if (arr1.Length == arr2.Length)
+        {
+            float resultant = 0;
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                resultant += arr1[i] * arr2[i];
+            }
+            return resultant;
+        }
+        else
+        {
+            return 0;
+        }
+       
+    }
+    public Matrix Multiply(Matrix toMultiply)
+    {
+        Matrix MultipliedMatrix = new Matrix(numberofrows, numberofcolumns);
+        if (numberofcolumns == toMultiply.numberofrows)
+        {
+            
+            for (int i = 0; i < numberofrows; i++)
+            {
+                for (int j = 0; j < toMultiply.numberofcolumns; j++)
+                {
+                    MultipliedMatrix.SetElement(i, j, AddArrayMultiples(GetRow(i),toMultiply.GetCol(j)));
+                }
+            }
+        }
+        return MultipliedMatrix;
+    }
+    public float Determinant()
+    {
+        float determinant;
+        int i = 0;
+        determinant = (MatrixData[i][i] * MatrixData[i+1][i+1]) - (MatrixData[i][i+1] * MatrixData[i+1][i]);  
+        return determinant;
+    }
     public void SetMatrix(int num)
     {
         InitalizeList();
