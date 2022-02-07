@@ -255,7 +255,7 @@ public class Matrix
         for (int i = 0; i < numberofrows; i++)
         {
             MatrixData.Add(new List<float>());
-            for (int j =numberofcolumns-i-1; j <= numberofcolumns-i-1; j++)
+            for (int j =numberofcolumns-i-1; j >= numberofcolumns-i-1; j--)
             {
                 MatrixData[i][j] = num;
             }
@@ -309,7 +309,7 @@ public class Matrix
         for (int i = 0; i < numberofrows; i++)
         {
             MatrixData.Add(new List<float>());
-            for (int j = numberofcolumns - i - 1; j <= numberofcolumns - i - 1; j++)
+            for (int j = numberofcolumns - i - 1; j >= numberofcolumns - i - 1; j--)
             {
                 if(MatrixData[i][j] != MatrixData[i + 1][j-1])
                 {
